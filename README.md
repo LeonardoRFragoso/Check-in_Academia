@@ -98,3 +98,30 @@ Treinos_AB/
 ├── config.py
 ├── requirements.txt
 └── run.py
+
+## Contribuição
+
+1. Faça um fork do projeto.
+2. Crie uma nova branch:
+    ```sh
+    git checkout -b feature/sua-feature
+    ```
+3. Faça suas alterações e commit:
+    ```sh
+    git commit -m 'Adicionei uma nova feature'
+    ```
+4. Envie para o repositório original:
+    ```sh
+    git push origin feature/sua-feature
+    ```
+5. Crie uma pull request.
+
+## Licença
+
+Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
+
+## Contato
+
+Leonardo Fragoso - leonardo.fragoso@example.com
+
+Link do Projeto: [https://github.com/seu_usuario/Treinos_AB](https://github.com/seu_usuario/Treinos_AB)
