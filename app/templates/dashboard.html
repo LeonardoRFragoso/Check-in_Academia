@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel de Controle - AcademiaGrupoAB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.6.23/css/uikit.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .uk-card {
+            width: 100%;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 30px;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .uk-calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-gap: 10px;
+        }
+        .uk-calendar-day {
+            background: #f1f1f1;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .uk-calendar-day.disabled {
+            background: #e0e0e0;
+            cursor: not-allowed;
+        }
+        .uk-calendar-day.today {
+            background: #2575fc;
+            color: #fff;
+            font-weight: bold;
+        }
+        .uk-modal-dialog {
+            border-radius: 10px;
+            margin: auto; /* Certifique-se de que o modal estará centralizado */
+        }
+    </style>
+</head>
+<body>
+    <div class="uk-card uk-card-default uk-card-body">
+        <h1 class="uk-heading-line"><span>Painel de Controle</span></h1>
+        <div class="uk-calendar">
+            {% for day in calendar %}
+            <div class="uk-calendar-day {{ 'today' if day.today else 'disabled' }}" data-day="{{ day.day }}">
+                <div>{{ day.day }}</div>
+                {% if day.activity %}
+                <div>{{ day.activity }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Modal for Activity Entry -->
+    <div id="modal-activity" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+            <h2 class="uk-modal-title">Registrar Atividade</h2>
+            <form id="activity-form" method="post" action="{{ url_for('main.add_activity') }}">
+                <textarea class="uk-textarea" rows="5" name="activity" placeholder="Descreva sua atividade" required></textarea>
+                <input type="hidden" name="day" id="activity-day">
+                <button class="uk-button uk-button-primary uk-margin-top" type="submit">Registrar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.6.23/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.6.23/js/uikit-icons.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const todayElement = document.querySelector('.uk-calendar-day.today');
+            if (todayElement) {
+                todayElement.addEventListener('click', () => {
+                    const dayNumber = todayElement.getAttribute('data-day');
+                    document.getElementById('activity-day').value = dayNumber;
+                    UIkit.modal('#modal-activity').show();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
